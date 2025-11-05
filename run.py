@@ -68,6 +68,38 @@ max_frames = int(fps * 60)
 
 for r in results:
     annotated = r.plot()
+    boxes = r.boxes
+    if boxes is not None and boxes.id is not None:
+        ids = boxes.id.int().cpu().numpy()
+        confs = boxes.conf.cpu().numpy()
+        xyxy = boxes.xyxy.cpu().numpy() 
+        kps_np = r.keypoints.xy.cpu().numpy() if r.keypoints is not None else []
+
+        for i, sid in enumerate(ids):
+            x1, y1, x2, y2 = map(int, xyxy[i])
+            conf = confs[i]
+
+            kp = kps_np[i]
+            up_now = hand_raised_simple(kp)
+            recent[sid].append(up_now)
+            stable_up = len(recent[sid]) == 3 and all(recent[sid])
+
+            color = (0, 255, 0) if stable_up else (0, 0, 255)
+
+            label = f"ID {sid} ({conf:.2f}) | {'Raised' if stable_up else 'Not Raised'}"
+
+            cv2.rectangle(annotated, (x1, y1 - 25), (x1 + 220, y1), color, -1)
+            cv2.putText(
+                annotated,
+                label,
+                (x1 + 5, y1 - 7),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.55,
+                (255, 255, 255),
+                2,
+                cv2.LINE_AA,
+            )
+
     writer.write(annotated)
 
     if (r.keypoints is not None) and (r.keypoints.xy is not None):
