@@ -37,7 +37,7 @@ The program outputs:
 
 ### Run Instructions
 
-pip install -r requirements.txt 
+pip install -r requirements.txt   
 python run.py  
 By default, it processes the first 60 seconds of inputs/input.mp4.
 To process the full video, remove or change the max_frames limit in run.py
