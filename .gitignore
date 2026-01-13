@@ -8,9 +8,8 @@ __pycache__/
 
 #
 *.mp4
-inputs/
-outputs/
 .DS_Store
+*json
 
 # C extensions
 *.so
