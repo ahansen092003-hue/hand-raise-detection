@@ -1,4 +1,4 @@
-#  Hand-Raise Detector
+#  Hand-Raise Detection
 
 Detect when students raise their hands (no facial recognition) using pose landmarks from a classroom video.   
 Video program was tested on: https://www.youtube.com/watch?v=1BSsIMKSmRA&list=PL8knJxvDjLHscjL-DTMgV20QU10dS3_Xd&index=4
